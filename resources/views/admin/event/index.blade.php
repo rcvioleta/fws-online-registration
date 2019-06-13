@@ -18,7 +18,7 @@
                             <thead>
                                 <tr>
                                     <th scope="col">Event Name</th>
-                                    <th scope="col">Year</th>
+                                    <th scope="col">Date</th>
                                     <th scope="col">Actions</th>
                                 </tr>
                             </thead>
@@ -26,7 +26,7 @@
                                 @foreach ($events as $event)
                                 <tr>
                                     <td>{{ $event->event_name }}</td>            
-                                    <td>{{ $event->year }}</td>            
+                                    <td>{{ $event->date }}</td>            
                                     <td>
                                         <a href="{{ route('event.edit', ['id' => $event->id]) }}" class="btn btn-sm btn-success">Edit</a>
                                         <a href="{{ route('event.destroy', ['id' => $event->id]) }}" class="btn btn-sm btn-danger">Delete</a>

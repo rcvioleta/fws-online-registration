@@ -34,7 +34,7 @@
     </a>
 
     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-        <a class="dropdown-item" href={{ route('registration.index') }}">Create Registration</a>
+        <a class="dropdown-item" href="{{ route('registration.create') }}">Create Registration</a>
         <a class="dropdown-item" href="{{ route('registration.index') }}">Registration History</a>
         <a class="dropdown-item" href="">Start Registration</a>
     </div>

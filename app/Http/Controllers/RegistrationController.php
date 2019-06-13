@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Model\Registration;
 use Illuminate\Http\Request;
+use App\Model\Event;
+use App\Http\Requests\Registration\RegistrationRequest;
 
 class RegistrationController extends Controller
 {
@@ -24,7 +26,7 @@ class RegistrationController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.registration.create', ['events' => Event::all()]);
     }
 
     /**
@@ -33,9 +35,10 @@ class RegistrationController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RegistrationRequest $request)
     {
-        //
+        Registration::create($request->all());
+        return redirect()->back()->with('success', 'Successfully added new registration form');
     }
 
     /**

@@ -33,19 +33,16 @@
                             @endif
                         </div>
                         <div class="form-group">
-                            <label for="year">Year</label>
+                            <label for="date">Date</label>
                             <input 
-                                type="text" 
-                                id="year" 
-                                pattern="\d{4}" 
-                                maxlength="4" 
-                                name="year" 
-                                class="form-control {{ $errors->has('year') ? 'is-invalid' : '' }}" 
-                                placeholder="e.g. {{ now()->year }}"
-                                value="{{ $event->year }}">
-                            @if ($errors->has('year'))
+                                type="date" 
+                                id="date" 
+                                name="date" 
+                                class="form-control {{ $errors->has('date') ? 'is-invalid' : '' }}" 
+                                value="{{ $event->date }}">
+                            @if ($errors->has('date'))
                                 <div class="invalid-feedback">
-                                    {{ $errors->first('year') }}
+                                    {{ $errors->first('date') }}
                                 </div>
                             @endif
                         </div>

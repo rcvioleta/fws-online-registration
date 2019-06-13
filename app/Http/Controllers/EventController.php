@@ -15,7 +15,7 @@ class EventController extends Controller
      */
     public function index()
     {
-        return view('admin.event.index')->with('events', Event::orderBy('year', 'asc')->get());
+        return view('admin.event.index')->with('events', Event::orderBy('date', 'asc')->get());
     }
 
     /**
