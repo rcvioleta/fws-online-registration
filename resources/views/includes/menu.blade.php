@@ -14,7 +14,7 @@
     </a>
 
     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-        <a class="dropdown-item" href="">Add Employee</a>
+        <a class="dropdown-item" href="{{ route('employee.create') }}">Add Employee</a>
         <a class="dropdown-item" href="{{ route('employee.index') }}">Show Employees</a>
     </div>
 </li>

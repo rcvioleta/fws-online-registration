@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Model\Employee;
 use Illuminate\Http\Request;
+use App\Http\Requests\Employee\EmployeeRequest;
+use App\Model\Campaign;
 
 class EmployeeController extends Controller
 {
@@ -24,7 +26,7 @@ class EmployeeController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.employee.create')->with('campaigns', Campaign::all());
     }
 
     public function activate($id)
@@ -50,9 +52,10 @@ class EmployeeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(EmployeeRequest $request)
     {
-        //
+        Employee::create($request->all());
+        return redirect()->route('employee.index')->with('success', 'Successfully added new employee!');
     }
 
     /**
@@ -74,7 +77,7 @@ class EmployeeController extends Controller
      */
     public function edit(Employee $employee)
     {
-        //
+        return view('admin.employee.edit', ['employee' => $employee, 'campaigns' => Campaign::all()]);
     }
 
     /**
@@ -84,9 +87,10 @@ class EmployeeController extends Controller
      * @param  \App\Model\Employee  $employee
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Employee $employee)
+    public function update(EmployeeRequest $request, Employee $employee)
     {
-        //
+        $employee->update($request->all());
+        return redirect()->route('employee.index')->with('success', 'Successfully updated employee!');
     }
 
     /**

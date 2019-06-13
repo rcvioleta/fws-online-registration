@@ -13,7 +13,7 @@ class EmployeeRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,16 @@ class EmployeeRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'emp_id' => 'required|numeric|digits_between:4,5',
+            'full_name' => 'required',
+            'campaign_id' => 'required'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'campaign_id.required' => 'You must select a campaign'
         ];
     }
 }
