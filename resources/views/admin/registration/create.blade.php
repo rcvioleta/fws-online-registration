@@ -74,13 +74,22 @@
 <script>
     function boxChecked(event) {
         const inputArray = event.target.form
-        event.target.checked = !event.target.checked;
 
-        Object.keys(inputArray).map(key => {
+        if (event.target.checked) {
+            event.target.checked = true
+            Object.keys(inputArray).map(key => {
             if (inputArray[key].type === 'checkbox') {
-                inputArray[key].checked = !inputArray[key].checked
-            }
-        })
+                inputArray[key].checked = true
+                }
+            })
+        } else {
+            event.target.checked = false
+                Object.keys(inputArray).map(key => {
+                if (inputArray[key].type === 'checkbox') {
+                    inputArray[key].checked = false
+                }
+            })
+        }
     }
 </script>
 @endsection

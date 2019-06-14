@@ -27,20 +27,21 @@ class RegistrationController extends Controller
         $sorted_reg = Registration::where('event_id', $id)->get();
         $registration = [];
         foreach ($sorted_reg as $key => $reg) {
-            $registration[$key]['id'] = $reg->id; 
+            $registration[$key]['id'] = $reg->id;
             $registration[$key]['e_id'] = $reg->employee->e_id;
             $registration[$key]['full_name'] = $reg->employee->full_name;
             $registration[$key]['campaign'] = $reg->employee->campaign->campaign_name;
             $registration[$key]['status'] = $reg->status;
         }
-        // return response()->json([
-        //     'data' => new RegistrationResource($sorted_reg), 
-        //     'status' => Response::HTTP_OK
-        // ]);
-        return response()->json([
-            'data' => $registration, 
-            'status' => Response::HTTP_OK
-        ]);
+        return response($registration, Response::HTTP_OK);
+    }
+
+    public function register($id)
+    {
+        $reg = Registration::find($id);
+        $reg->status = 1;
+        $reg->save();
+        return response('Successully registered', Response::HTTP_OK);
     }
 
     /**

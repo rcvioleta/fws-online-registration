@@ -1697,6 +1697,38 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -1772,7 +1804,9 @@ __webpack_require__.r(__webpack_exports__);
     return {
       show: true,
       events: "",
-      registrations: ""
+      registrations: "",
+      selected_event: "",
+      search_key: ""
     };
   },
   created: function created() {
@@ -1789,12 +1823,48 @@ __webpack_require__.r(__webpack_exports__);
     generateRegistration: function generateRegistration(event) {
       var _this2 = this;
 
-      axios.get("/event/" + event.target.value + "/registration").then(function (result) {
-        _this2.show = false;
-        _this2.registrations = result.data.data;
+      var event_id = +event.target.value;
+      this.selected_event = this.events.find(function (event) {
+        return event.id === event_id;
+      });
+      axios.get("/event/" + event_id + "/registration").then(function (result) {
+        if (result.data.length > 0) {
+          _this2.show = false;
+          _this2.registrations = result.data;
+        } else {
+          alert("The event that you have selected doesn't have a registration set!");
+        }
+
         console.log("fetched registration", result);
       })["catch"](function (err) {
         return console.log(err.response.data);
+      });
+    },
+    register: function register(id) {
+      var _this3 = this;
+
+      axios.get("/event/" + id + "/register").then(function (response) {
+        console.log(response);
+
+        var updatedRegistration = _toConsumableArray(_this3.registrations);
+
+        var index = _this3.registrations.findIndex(function (record) {
+          return record.id === id;
+        });
+
+        updatedRegistration[index].status = 1;
+        _this3.registrations = _toConsumableArray(updatedRegistration);
+      })["catch"](function (err) {
+        return console.log(err);
+      });
+    }
+  },
+  computed: {
+    filtered_employees: function filtered_employees() {
+      var _this4 = this;
+
+      return this.registrations.filter(function (record) {
+        return record.full_name.toLowerCase().includes(_this4.search_key.toLowerCase());
       });
     }
   }
@@ -37122,14 +37192,22 @@ var render = function() {
                         attrs: { name: "event", id: "event" },
                         on: { change: _vm.generateRegistration }
                       },
-                      _vm._l(_vm.events, function(event) {
-                        return _c(
+                      [
+                        _c(
                           "option",
-                          { key: event.key, domProps: { value: event.id } },
-                          [_vm._v(_vm._s(event.event_name))]
-                        )
-                      }),
-                      0
+                          { attrs: { value: "", selected: "", disabled: "" } },
+                          [_vm._v("Select an event to start the registration")]
+                        ),
+                        _vm._v(" "),
+                        _vm._l(_vm.events, function(event) {
+                          return _c(
+                            "option",
+                            { key: event.key, domProps: { value: event.id } },
+                            [_vm._v(_vm._s(event.event_name))]
+                          )
+                        })
+                      ],
+                      2
                     )
                   ]),
                   _vm._v(" "),
@@ -37144,7 +37222,50 @@ var render = function() {
                 ])
               ])
             : _c("div", { key: "has-reg", staticClass: "card" }, [
+                _c("div", { staticClass: "card-header" }, [
+                  _vm._v(
+                    "Registration Form for " +
+                      _vm._s(_vm.selected_event.event_name)
+                  )
+                ]),
+                _vm._v(" "),
                 _c("div", { staticClass: "card-body" }, [
+                  _c("div", { staticClass: "small bg-warning mb-4 p-1" }, [
+                    _c("strong", [_vm._v("Important!")]),
+                    _vm._v(
+                      " Search entries using names to filter result\n        "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("form", [
+                    _c("div", { staticClass: "form-group" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.search_key,
+                            expression: "search_key"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "text",
+                          placeholder: "Filter record using names, keywords..."
+                        },
+                        domProps: { value: _vm.search_key },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.search_key = $event.target.value
+                          }
+                        }
+                      })
+                    ])
+                  ]),
+                  _vm._v(" "),
                   _c(
                     "table",
                     { staticClass: "table table-striped table-light" },
@@ -37157,25 +37278,51 @@ var render = function() {
                           _vm._v(" "),
                           _c("th", [_vm._v("Campaign")]),
                           _vm._v(" "),
-                          _c("th", [_vm._v("Status")]),
-                          _vm._v(" "),
-                          _c("th", [_vm._v("Actions")])
+                          _c("th", [_vm._v("Status")])
                         ])
                       ]),
                       _vm._v(" "),
                       _c(
                         "tbody",
-                        _vm._l(_vm.registrations, function(registration) {
-                          return _c("tr", { key: registration.id }, [
-                            _c("td", [_vm._v(_vm._s(registration.e_id))]),
+                        _vm._l(_vm.filtered_employees, function(
+                          filtered_employee
+                        ) {
+                          return _c("tr", { key: filtered_employee.id }, [
+                            _c("td", [_vm._v(_vm._s(filtered_employee.e_id))]),
                             _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(registration.full_name))]),
+                            _c("td", [
+                              _vm._v(_vm._s(filtered_employee.full_name))
+                            ]),
                             _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(registration.campaign))]),
+                            _c("td", [
+                              _vm._v(_vm._s(filtered_employee.campaign))
+                            ]),
                             _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(registration.status))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v("More on actions later")])
+                            _c("td", [
+                              filtered_employee.status
+                                ? _c(
+                                    "button",
+                                    {
+                                      staticClass: "btn-sm btn-success",
+                                      attrs: { disabled: "" }
+                                    },
+                                    [_vm._v("Registered")]
+                                  )
+                                : _c(
+                                    "button",
+                                    {
+                                      staticClass: "btn-sm btn-danger",
+                                      on: {
+                                        click: function($event) {
+                                          return _vm.register(
+                                            filtered_employee.id
+                                          )
+                                        }
+                                      }
+                                    },
+                                    [_vm._v("Unregistered")]
+                                  )
+                            ])
                           ])
                         }),
                         0
@@ -49516,8 +49663,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\fws-online-registration\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\fws-online-registration\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/rogene/Desktop/Projects/fws-online-registration/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/rogene/Desktop/Projects/fws-online-registration/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
