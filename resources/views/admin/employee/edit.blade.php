@@ -22,15 +22,15 @@
                             <input 
                                 type="text" 
                                 id="id-number" 
-                                name="emp_id" 
+                                name="e_id" 
                                 pattern="\d{4,5}"
                                 maxlength="5"
-                                class="form-control {{ $errors->has('emp_id') ? 'is-invalid' : '' }}" 
+                                class="form-control {{ $errors->has('e_id') ? 'is-invalid' : '' }}" 
                                 placeholder="ID Number"
-                                value="{{ $employee->emp_id }}">
-                            @if ($errors->has('emp_id'))
+                                value="{{ $employee->e_id }}">
+                            @if ($errors->has('e_id'))
                                 <div class="invalid-feedback">
-                                    {{ $errors->first('emp_id') }}
+                                    {{ $errors->first('e_id') }}
                                 </div>
                             @endif
                         </div>

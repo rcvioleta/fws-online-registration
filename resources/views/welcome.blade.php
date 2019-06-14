@@ -23,7 +23,7 @@
             body {
                 background-image: url('/images/background/building.jpg');
                 background-repeat: no-repeat;
-                background-position: right center;
+                background-position: center center;
                 background-size: cover;
                 opacity: .8;
             }

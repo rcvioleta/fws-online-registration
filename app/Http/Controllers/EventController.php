@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Model\Event;
 use Illuminate\Http\Request;
 use App\Http\Requests\Event\EventRequest;
+use App\Http\Resources\Event\EventResource;
 
 class EventController extends Controller
 {
@@ -16,6 +17,11 @@ class EventController extends Controller
     public function index()
     {
         return view('admin.event.index')->with('events', Event::orderBy('date', 'asc')->get());
+    }
+
+    public function getEvents()
+    {
+        return EventResource::collection(Event::all());
     }
 
     /**

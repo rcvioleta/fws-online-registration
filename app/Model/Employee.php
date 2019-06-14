@@ -12,4 +12,9 @@ class Employee extends Model
     {
         return $this->belongsTo(Campaign::class);
     }
+
+    public function registrations()
+    {
+        return $this->hasMany(Registration::class);
+    }
 }

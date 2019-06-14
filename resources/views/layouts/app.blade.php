@@ -21,6 +21,9 @@
 
     <!-- Toastr --> 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
 </head>
 <body>
     <div id="app">
@@ -71,5 +74,8 @@
             toastr.success('{{ Session::get("success") }}')
         @endif
     </script>
+
+    {{-- <script src="{{ asset('js/custom-script.js') }}"></script> --}}
+    @yield('custom-js')
 </body>
 </html>

@@ -15,6 +15,9 @@ class CreateRegistrationsTable extends Migration
     {
         Schema::create('registrations', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('employee_id')->unsigned();
+            $table->integer('event_id')->unsigned();
+            $table->integer('status')->default(0);
             $table->timestamps();
         });
     }

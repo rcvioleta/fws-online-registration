@@ -27,7 +27,7 @@
                             <tbody>
                                 @foreach ($employees as $employee)
                                 <tr>
-                                    <td>{{ $employee->emp_id }}</td>            
+                                    <td>{{ $employee->e_id }}</td>            
                                     <td>{{ $employee->full_name }}</td>            
                                     <td>{{ $employee->campaign->campaign_name }}</td>            
                                     <td>

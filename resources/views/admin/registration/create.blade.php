@@ -27,42 +27,60 @@
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="id-number">ID Number</label>
-                            <input 
-                                type="text" 
-                                id="id-number" 
-                                name="emp_id" 
-                                pattern="\d{5}"
-                                maxlength="5"
-                                class="form-control {{ $errors->has('emp_id') ? 'is-invalid' : '' }}" 
-                                placeholder="ID Number"
-                                value="{{ old('emp_id') }}">
-                            @if ($errors->has('emp_id'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('emp_id') }}
-                                </div>
+                            @if ($errors->has('campaign'))
+                                <div class="alert alert-danger">You must select at least one campaign!</div>
                             @endif
+                            <label for="">Select campaign to be included:</label>
+                            <ul class="list-group">
+                                <li class="list-group-item">
+                                    <div class="form-check">
+                                        <input 
+                                        type="checkbox" 
+                                        class="form-check-input" 
+                                        value="" 
+                                        id="select-all"
+                                        onchange="boxChecked(event)">
+                                        <label class="form-check-label" for="select-all">
+                                            Select All
+                                        </label>
+                                    </div>
+                                </li>
+                                @foreach ($campaigns as $campaign)
+                                    <li class="list-group-item">
+                                        <div class="form-check">
+                                            <input 
+                                                type="checkbox" 
+                                                class="form-check-input" 
+                                                name="campaign[]" 
+                                                value="{{ $campaign->id }}" id="{{ $campaign->campaign_name }}">
+                                            <label class="form-check-label" for="{{ $campaign->campaign_name }}">
+                                                {{ $campaign->campaign_name }}
+                                            </label>
+                                        </div>
+                                    </li>
+                                @endforeach
+                            </ul>
                         </div>
-                        <div class="form-group">
-                            <label for="full-name">Full Name</label>
-                            <input 
-                                type="text" 
-                                id="full-name" 
-                                name="full_name" 
-                                class="form-control {{ $errors->has('full_name') ? 'is-invalid' : '' }}" 
-                                placeholder="Employee full name"
-                                value="{{ old('full_name') }}">
-                            @if ($errors->has('full_name'))
-                                <div class="invalid-feedback">
-                                    {{ $errors->first('full_name') }}
-                                </div>
-                            @endif
-                        </div>
-                        <button class="btn btn-md btn-primary">Add Employee</button>
+                        <button type="submit" class="btn btn-md btn-primary">Create Registration</button>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
+@endsection
+
+@section('custom-js')
+<script>
+    function boxChecked(event) {
+        const inputArray = event.target.form
+        event.target.checked = !event.target.checked;
+
+        Object.keys(inputArray).map(key => {
+            if (inputArray[key].type === 'checkbox') {
+                inputArray[key].checked = !inputArray[key].checked
+            }
+        })
+    }
+</script>
 @endsection

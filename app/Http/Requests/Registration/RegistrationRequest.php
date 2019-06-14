@@ -13,7 +13,7 @@ class RegistrationRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,8 @@ class RegistrationRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'event_id' => 'required',
+            'campaign' => 'required|array'
         ];
     }
 }
