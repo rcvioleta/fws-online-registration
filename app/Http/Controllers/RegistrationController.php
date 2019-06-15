@@ -22,6 +22,12 @@ class RegistrationController extends Controller
         return view('admin.registration.index');
     }
 
+    public function history($events)
+    {
+        // return view('admin.registration.history')->with('events', $events);
+        return response($events, 200);
+    }
+
     public function serve($id)
     {
         $sorted_reg = Registration::where('event_id', $id)->get();
@@ -55,7 +61,7 @@ class RegistrationController extends Controller
             'admin.registration.create',
             [
                 'events' => Event::all(),
-                'campaigns' => Campaign::all()
+                'campaigns' => Campaign::where('status', 1)->get()
             ]
         );
     }
@@ -73,8 +79,13 @@ class RegistrationController extends Controller
      */
     public function store(RegistrationRequest $request)
     {
+        $registration_exist = Registration::where('event_id', $request->event_id)->get();
+        if (count($registration_exist) > 0) {
+            return redirect()->back()->with('failed', 'Registration form already exist! Please create a new one instead.');
+        }
+
         foreach ($request->campaign as $key => $campaign_id) {
-            $emp_data = Campaign::find($campaign_id)->employee;
+            $emp_data = Campaign::find($campaign_id)->employee->where('status', 1);
             if (count($emp_data) !== 0) {
                 if (count($emp_data) > 1) {
                     foreach ($emp_data as $data) {
@@ -89,10 +100,10 @@ class RegistrationController extends Controller
                         'event_id' => $request->event_id
                     ]);
                 }
-            }
+            } 
         }
 
-        return redirect()->back()->with(' success ', ' Successfully added new registration form');
+        return redirect()->back()->with('success', 'Successfully added new registration form');
     }
 
     /**

@@ -6,6 +6,8 @@ use App\Model\Employee;
 use Illuminate\Http\Request;
 use App\Http\Requests\Employee\EmployeeRequest;
 use App\Model\Campaign;
+use App\Http\Resources\Employee\EmployeeResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class EmployeeController extends Controller
 {
@@ -17,6 +19,11 @@ class EmployeeController extends Controller
     public function index()
     {
         return view('admin.employee.index')->with('employees', Employee::all());
+    }
+
+    public function getEmployees()
+    {
+        return EmployeeResource::collection(Employee::orderBy('full_name', 'asc')->get());
     }
 
     /**
@@ -34,7 +41,7 @@ class EmployeeController extends Controller
         $employee = Employee::find($id);
         $employee->status = 1;
         $employee->save();
-        return redirect()->back()->with('success', 'Employee activated!');
+        return response('Successfully activated employee', Response::HTTP_ACCEPTED);
     }
 
     public function deactivate($id)
@@ -42,7 +49,7 @@ class EmployeeController extends Controller
         $employee = Employee::find($id);
         $employee->status = 0;
         $employee->save();
-        return redirect()->back()->with('success', 'Employee deactivated!');
+        return response('Successfully deactivated employee', Response::HTTP_ACCEPTED);
     }
 
 

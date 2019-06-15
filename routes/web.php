@@ -25,15 +25,21 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::resource('/employee', 'EmployeeController');
 
-    Route::get('/employee/{campaign}/activate', 'EmployeeController@activate')->name('employee.activate');
+    Route::group(['prefix' => 'get'], function () {
+        Route::get('/employees', 'EmployeeController@getEmployees');
+    });
 
-    Route::get('/employee/{campaign}/deactivate', 'EmployeeController@deactivate')->name('employee.deactivate');
+    Route::get('/employee/{id}/activate', 'EmployeeController@activate')->name('employee.activate');
+
+    Route::get('/employee/{id}/deactivate', 'EmployeeController@deactivate')->name('employee.deactivate');
 
     Route::resource('/registration', 'RegistrationController');
 
     Route::group(['prefix' => 'event'], function () {
         Route::get('/{id}/registration', 'RegistrationController@serve');
         Route::get('/{id}/register', 'RegistrationController@register');
+        Route::get('/{events}/report', 'RegistrationController@history')->name('registration.report');
+        Route::get('/{id}/history', 'EventController@checkEventHistory')->name('event.history');
     });
 
     Route::get('/show-registration/{data}', 'RegistrationController@showRegistration')->name('registration.showRegistration');

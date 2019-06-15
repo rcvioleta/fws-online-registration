@@ -73,9 +73,11 @@
         @if (Session::has('success'))
             toastr.success('{{ Session::get("success") }}')
         @endif
-    </script>
 
-    {{-- <script src="{{ asset('js/custom-script.js') }}"></script> --}}
+        @if (Session::has('failed'))
+            toastr.error('{{ Session::get("failed") }}')
+        @endif
+    </script>
     @yield('custom-js')
 </body>
 </html>

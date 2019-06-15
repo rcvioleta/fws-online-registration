@@ -6,6 +6,8 @@ use App\Model\Event;
 use Illuminate\Http\Request;
 use App\Http\Requests\Event\EventRequest;
 use App\Http\Resources\Event\EventResource;
+use App\Model\Registration;
+use Symfony\Component\HttpFoundation\Response;
 
 class EventController extends Controller
 {
@@ -32,6 +34,16 @@ class EventController extends Controller
     public function create()
     {
         return view('admin.event.create');
+    }
+
+    public function checkEventHistory($id)
+    {   
+        $event_history = Registration::where('event_id', $id)->get();
+        if (count($event_history) < 1) {
+            return redirect()->back()->with('failed', 'No event history to generate!');
+        }
+        // return redirect()->route('registration.report', ['events' => $event_history]);
+        return response($event_history, Response::HTTP_OK);
     }
 
     /**

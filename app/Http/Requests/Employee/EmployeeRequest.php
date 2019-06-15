@@ -24,7 +24,7 @@ class EmployeeRequest extends FormRequest
     public function rules()
     {
         return [
-            'emp_id' => 'required|numeric|digits_between:4,5',
+            'e_id' => 'required|numeric|digits_between:4,5',
             'full_name' => 'required',
             'campaign_id' => 'required'
         ];

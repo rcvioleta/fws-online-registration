@@ -1,19 +1,8 @@
 <template>
-  <!-- <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-8">
-        <div class="card">
-          <div class="card-header">Registration Component</div>
-
-          <div class="card-body">I'm an example component.</div>
-        </div>
-      </div>
-    </div>
-  </div>-->
   <div id="registration">
     <transition
-      enter-active-class="animated flipInX"
-      leave-active-class="animated flipOutX"
+      enter-active-class="animated fadeInUpBig"
+      leave-active-class="animated fadeOutDownBig"
       mode="out-in"
     >
       <div class="card" v-if="show" key="no-reg">
@@ -60,6 +49,7 @@
           <table class="table table-striped table-light">
             <thead>
               <tr>
+                <th>List Number</th>
                 <th>ID Number</th>
                 <th>Full Name</th>
                 <th>Campaign</th>
@@ -67,7 +57,11 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="filtered_employee in filtered_employees" :key="filtered_employee.id">
+              <tr
+                v-for="(filtered_employee, index) in filtered_employees"
+                :key="filtered_employee.id"
+              >
+                <td>{{ index | countingForHumans }}</td>
                 <td>{{ filtered_employee.e_id }}</td>
                 <td>{{ filtered_employee.full_name }}</td>
                 <td>{{ filtered_employee.campaign }}</td>

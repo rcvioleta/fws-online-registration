@@ -28,8 +28,9 @@
                                     <td>{{ $event->event_name }}</td>            
                                     <td>{{ $event->date }}</td>            
                                     <td>
-                                        <a href="{{ route('event.edit', ['id' => $event->id]) }}" class="btn btn-sm btn-success">Edit</a>
-                                        <a href="{{ route('event.destroy', ['id' => $event->id]) }}" class="btn btn-sm btn-danger">Delete</a>
+                                        <a href="{{ route('event.edit', ['id' => $event->id]) }}" class="btn btn-sm btn-secondary">Edit</a>
+                                        {{-- <a href="{{ route('event.destroy', ['id' => $event->id]) }}" class="btn btn-sm btn-danger">Delete</a> --}}
+                                        <a href="{{ route('event.history', ['id' => $event->id]) }}" class="btn btn-sm btn-primary">Generate Report</a>
                                     </td>            
                                 </tr>
                                 @endforeach

@@ -70,7 +70,7 @@
                                 </div>
                             @endif
                         </div>
-                        <button class="btn btn-md btn-primary">Update Employee</button>
+                        <button type="submit" class="btn btn-md btn-primary">Update Employee</button>
                     </form>
                 </div>
             </div>
