@@ -37539,7 +37539,8 @@ var render = function() {
                         staticClass: "form-control",
                         attrs: {
                           type: "text",
-                          placeholder: "Filter record using names, keywords..."
+                          placeholder:
+                            "Filter record using full name, name keywords..."
                         },
                         domProps: { value: _vm.search_key },
                         on: {

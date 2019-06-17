@@ -41,7 +41,7 @@
               <input
                 type="text"
                 class="form-control"
-                placeholder="Filter record using names, keywords..."
+                placeholder="Filter record using full name, name keywords..."
                 v-model="search_key"
               >
             </div>
