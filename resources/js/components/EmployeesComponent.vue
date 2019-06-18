@@ -28,8 +28,8 @@
             <td>{{ employee.full_name }}</td>
             <td>{{ employee.campaign }}</td>
             <td>
-              <button class="btn btn-sm btn-success" disabled v-if="employee.status">Active</button>
-              <button class="btn btn-sm btn-danger" disabled v-else>Inactive</button>
+              <div class="badge badge-success" disabled v-if="employee.status">Active</div>
+              <div class="badge badge-danger" disabled v-else>Inactive</div>
             </td>
             <td>
               <button class="btn btn-sm btn-primary" @click="editEmployee(employee.id)">Edit</button>

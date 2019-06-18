@@ -37,13 +37,19 @@ class EventController extends Controller
     }
 
     public function checkEventHistory($id)
-    {   
+    {
         $event_history = Registration::where('event_id', $id)->get();
         if (count($event_history) < 1) {
-            return redirect()->back()->with('failed', 'No event history to generate!');
+            return response()->json([
+                'data' => false,
+                'status' => Response::HTTP_NO_CONTENT
+            ]);
         }
-        // return redirect()->route('registration.report', ['events' => $event_history]);
-        return response($event_history, Response::HTTP_OK);
+        return response()->json([
+            'data' => true,
+            'id' => $id,
+            'status' => Response::HTTP_OK
+        ]);
     }
 
     /**

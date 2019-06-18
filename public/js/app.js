@@ -37343,17 +37343,17 @@ var render = function() {
               _c("td", [
                 employee.status
                   ? _c(
-                      "button",
+                      "div",
                       {
-                        staticClass: "btn btn-sm btn-success",
+                        staticClass: "badge badge-success",
                         attrs: { disabled: "" }
                       },
                       [_vm._v("Active")]
                     )
                   : _c(
-                      "button",
+                      "div",
                       {
-                        staticClass: "btn btn-sm btn-danger",
+                        staticClass: "badge badge-danger",
                         attrs: { disabled: "" }
                       },
                       [_vm._v("Inactive")]
@@ -50034,8 +50034,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\fws-online-registration\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\fws-online-registration\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/rogene/Desktop/Projects/fws-online-registration/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/rogene/Desktop/Projects/fws-online-registration/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

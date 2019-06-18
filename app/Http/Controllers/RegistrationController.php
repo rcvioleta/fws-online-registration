@@ -22,13 +22,13 @@ class RegistrationController extends Controller
         return view('admin.registration.index');
     }
 
-    public function history($events)
+    public function serve($id)
     {
-        // return view('admin.registration.history')->with('events', $events);
-        return response($events, 200);
+        $registration = $this->getRegByEvent($id);
+        return response($registration, Response::HTTP_OK);
     }
 
-    public function serve($id)
+    public function getRegByEvent($id)
     {
         $sorted_reg = Registration::where('event_id', $id)->get();
         $registration = [];
@@ -39,7 +39,7 @@ class RegistrationController extends Controller
             $registration[$key]['campaign'] = $reg->employee->campaign->campaign_name;
             $registration[$key]['status'] = $reg->status;
         }
-        return response($registration, Response::HTTP_OK);
+        return $registration;
     }
 
     public function register($id)
@@ -71,6 +71,24 @@ class RegistrationController extends Controller
         return view('admin.registration.show')->with('events', Event::all());
     }
 
+    public function print($id)
+    {
+        $registration = $this->getRegByEvent($id);
+        $registered = 0;
+        $total = count($registration);
+        foreach ($registration as $reg) {
+            if ($reg['status'] !== 0) $registered += 1;
+        }
+        $event = Event::find($id);
+        return view('admin.registration.history', [
+            'records' => $registration,
+            'attendance_percentage' => $registered / $total * 100 . '%',
+            'registered' => $registered,
+            'total' => $total,
+            'event' => $event
+        ]);
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -100,7 +118,7 @@ class RegistrationController extends Controller
                         'event_id' => $request->event_id
                     ]);
                 }
-            } 
+            }
         }
 
         return redirect()->back()->with('success', 'Successfully added new registration form');

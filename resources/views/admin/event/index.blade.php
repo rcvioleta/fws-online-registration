@@ -30,7 +30,7 @@
                                     <td>
                                         <a href="{{ route('event.edit', ['id' => $event->id]) }}" class="btn btn-sm btn-secondary">Edit</a>
                                         {{-- <a href="{{ route('event.destroy', ['id' => $event->id]) }}" class="btn btn-sm btn-danger">Delete</a> --}}
-                                        <a href="{{ route('event.history', ['id' => $event->id]) }}" class="btn btn-sm btn-primary">Generate Report</a>
+                                        <a href="{{ route('event.history', ['id' => $event->id]) }}" onclick="generateReport(event)" class="btn btn-sm btn-primary">Generate Report</a>
                                     </td>            
                                 </tr>
                                 @endforeach
@@ -41,4 +41,21 @@
             </div>
         </div>
     </div>
+@endsection
+
+@section('custom-js')
+    <script>
+        function generateReport(event) {
+            event.preventDefault()
+            const route = event.srcElement.href
+            fetch(route)
+            .then(response => response.json())
+            .then(result => {
+                console.log('data', result)
+                if (!result.data) alert('No history to show!')
+                else window.location.href = `/event/${result.id}/print`
+            })
+            .catch(err => console.log(err))
+        }
+    </script>
 @endsection

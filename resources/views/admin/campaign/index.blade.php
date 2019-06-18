@@ -28,9 +28,9 @@
                                     <td>{{ $campaign->campaign_name }}</td>            
                                     <td>
                                         @if ($campaign->status === 0)
-                                            <button class="btn btn-sm btn-danger" disabled>Inactive</button>
+                                            <div class="badge badge-danger" disabled>Inactive</div>
                                         @else
-                                            <button class="btn btn-sm btn-success" disabled>Active</button>
+                                            <div class="badge badge-success" disabled>Active</div>
                                         @endif
                                     </td>            
                                     <td>

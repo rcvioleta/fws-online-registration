@@ -27,6 +27,6 @@ class DatabaseSeeder extends Seeder
 
         factory(Event::class, 5)->create();
         factory(Campaign::class, 10)->create();
-        factory(Employee::class, 20)->create();
+        factory(Employee::class, 1000)->create();
     }
 }

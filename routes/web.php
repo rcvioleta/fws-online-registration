@@ -38,8 +38,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['prefix' => 'event'], function () {
         Route::get('/{id}/registration', 'RegistrationController@serve');
         Route::get('/{id}/register', 'RegistrationController@register');
-        Route::get('/{events}/report', 'RegistrationController@history')->name('registration.report');
         Route::get('/{id}/history', 'EventController@checkEventHistory')->name('event.history');
+        Route::get('/{id}/print', 'RegistrationController@print')->name('event.print');
     });
 
     Route::get('/show-registration/{data}', 'RegistrationController@showRegistration')->name('registration.showRegistration');
