@@ -13,6 +13,11 @@ class Employee extends Model
         return $this->belongsTo(Campaign::class);
     }
 
+    public function team()
+    {
+        return $this->belongsTo(Team::class);
+    }
+
     public function registrations()
     {
         return $this->hasMany(Registration::class);

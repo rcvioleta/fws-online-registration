@@ -19,7 +19,7 @@
                                 <tr>
                                     <th scope="col">Event Name</th>
                                     <th scope="col">Date</th>
-                                    <th scope="col">Actions</th>
+                                    <th scope="col" class="text-center">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -27,10 +27,10 @@
                                 <tr>
                                     <td>{{ $event->event_name }}</td>            
                                     <td>{{ $event->date }}</td>            
-                                    <td>
-                                        <a href="{{ route('event.edit', ['id' => $event->id]) }}" class="btn btn-sm btn-secondary">Edit</a>
+                                    <td class="text-center">
+                                        <a href="{{ route('event.edit', ['id' => $event->id]) }}" class="btn btn-sm btn-warning">Edit</a>
                                         {{-- <a href="{{ route('event.destroy', ['id' => $event->id]) }}" class="btn btn-sm btn-danger">Delete</a> --}}
-                                        <a href="{{ route('event.history', ['id' => $event->id]) }}" onclick="generateReport(event)" class="btn btn-sm btn-primary">Generate Report</a>
+                                        <a href="{{ route('event.history', ['id' => $event->id]) }}" onclick="generateReport(event)" class="btn btn-sm btn-success">Generate Report</a>
                                     </td>            
                                 </tr>
                                 @endforeach

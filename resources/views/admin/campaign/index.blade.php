@@ -19,7 +19,7 @@
                                 <tr>
                                     <th scope="col">Campaign Name</th>
                                     <th scope="col">Status</th>
-                                    <th scope="col">Actions</th>
+                                    <th scope="col" class="text-center">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -33,8 +33,8 @@
                                             <div class="badge badge-success" disabled>Active</div>
                                         @endif
                                     </td>            
-                                    <td>
-                                        <a href="{{ route('campaign.edit', ['id' => $campaign->id]) }}" class="btn btn-sm btn-primary">Edit</a>
+                                    <td class="text-center">
+                                        <a href="{{ route('campaign.edit', ['id' => $campaign->id]) }}" class="btn btn-sm btn-warning">Edit</a>
                                         @if ($campaign->status === 0)
                                             <a href="{{ route('campaign.activate', ['id' => $campaign->id]) }}" class="btn btn-sm btn-success">Activate</a>
                                         @else

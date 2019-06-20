@@ -18,7 +18,8 @@ class RegistrationResource extends JsonResource
             'id' => $this->id, 
             'e_id' => $this->employee->e_id, 
             'full_name' => $this->employee->full_name, 
-            'campaign' => $this->employee->campaign->campaign_name, 
+            'campaign' => $this->employee->campaign->campaign_name,
+            'team' => $this->employee->team->team_name,
             'status' => $this->status
         ];
     }

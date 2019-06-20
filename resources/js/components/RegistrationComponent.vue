@@ -53,6 +53,7 @@
                 <th>ID Number</th>
                 <th>Full Name</th>
                 <th>Campaign</th>
+                <th>Team</th>
                 <th>Status</th>
               </tr>
             </thead>
@@ -65,6 +66,7 @@
                 <td>{{ filtered_employee.e_id }}</td>
                 <td>{{ filtered_employee.full_name }}</td>
                 <td>{{ filtered_employee.campaign }}</td>
+                <td>{{ filtered_employee.team }}</td>
                 <td>
                   <button
                     class="btn-sm btn-success"

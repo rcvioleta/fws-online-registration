@@ -18,20 +18,24 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/get-events', 'EventController@getEvents');
 
     Route::resource('/campaign', 'CampaignController');
-
     Route::get('/campaign/{campaign}/activate', 'CampaignController@activate')->name('campaign.activate');
-
     Route::get('/campaign/{campaign}/deactivate', 'CampaignController@deactivate')->name('campaign.deactivate');
 
     Route::resource('/employee', 'EmployeeController');
+    Route::group(['prefix' => 'employee'], function () {
+        Route::get('/{id}/activate', 'EmployeeController@activate')->name('employee.activate');
+        Route::get('/{id}/deactivate', 'EmployeeController@deactivate')->name('employee.deactivate');
+    });
+
+    Route::resource('/team', 'TeamController');
+    Route::group(['prefix' => 'team'], function () {
+        Route::get('/{id}/activate', 'TeamController@activate')->name('team.activate');
+        Route::get('/{id}/deactivate', 'TeamController@deactivate')->name('team.deactivate');
+    });
 
     Route::group(['prefix' => 'get'], function () {
         Route::get('/employees', 'EmployeeController@getEmployees');
     });
-
-    Route::get('/employee/{id}/activate', 'EmployeeController@activate')->name('employee.activate');
-
-    Route::get('/employee/{id}/deactivate', 'EmployeeController@deactivate')->name('employee.deactivate');
 
     Route::resource('/registration', 'RegistrationController');
 

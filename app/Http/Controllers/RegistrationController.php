@@ -9,6 +9,10 @@ use App\Http\Requests\Registration\RegistrationRequest;
 use App\Model\Campaign;
 use Symfony\Component\HttpFoundation\Response;
 use App\Http\Resources\Registration\RegistrationResource;
+use App\Model\Employee;
+use Carbon\Carbon;
+
+// ini_set('max_execution_time', 300);
 
 class RegistrationController extends Controller
 {
@@ -37,6 +41,7 @@ class RegistrationController extends Controller
             $registration[$key]['e_id'] = $reg->employee->e_id;
             $registration[$key]['full_name'] = $reg->employee->full_name;
             $registration[$key]['campaign'] = $reg->employee->campaign->campaign_name;
+            $registration[$key]['team'] = $reg->employee->team->team_name;
             $registration[$key]['status'] = $reg->status;
         }
         return $registration;
@@ -97,30 +102,27 @@ class RegistrationController extends Controller
      */
     public function store(RegistrationRequest $request)
     {
-        $registration_exist = Registration::where('event_id', $request->event_id)->get();
-        if (count($registration_exist) > 0) {
+        $registrations = Registration::where('event_id', $request->event_id)->get()->first();
+        if ($registrations) {
             return redirect()->back()->with('failed', 'Registration form already exist! Please create a new one instead.');
         }
 
+        $bulk_insert = [];
+
         foreach ($request->campaign as $key => $campaign_id) {
             $emp_data = Campaign::find($campaign_id)->employee->where('status', 1);
-            if (count($emp_data) !== 0) {
-                if (count($emp_data) > 1) {
-                    foreach ($emp_data as $data) {
-                        Registration::create([
-                            'employee_id' => $data->id,
-                            'event_id' => $request->event_id
-                        ]);
-                    }
-                } else {
-                    Registration::create([
-                        'employee_id' => $emp_data[0]->id,
-                        'event_id' => $request->event_id
-                    ]);
-                }
+            $now = Carbon::now()->toDateTimeString();
+            foreach ($emp_data as $key => $data) {
+                $bulk_insert[] = [
+                    'employee_id' => $data->id,
+                    'event_id' => $request->event_id,
+                    'created_at' => $now,
+                    'updated_at' => $now
+                ];
             }
         }
 
+        Registration::insert($bulk_insert);
         return redirect()->back()->with('success', 'Successfully added new registration form');
     }
 

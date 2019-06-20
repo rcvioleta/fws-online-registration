@@ -18,8 +18,9 @@
             <th scope="col">ID Number</th>
             <th scope="col">Full Name</th>
             <th scope="col">Campaign</th>
+            <th scope="col">Team</th>
             <th scope="col">Status</th>
-            <th scope="col">Actions</th>
+            <th scope="col" class="text-center">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -27,12 +28,13 @@
             <td>{{ employee.e_id }}</td>
             <td>{{ employee.full_name }}</td>
             <td>{{ employee.campaign }}</td>
+            <td>{{ employee.team }}</td>
             <td>
               <div class="badge badge-success" disabled v-if="employee.status">Active</div>
               <div class="badge badge-danger" disabled v-else>Inactive</div>
             </td>
-            <td>
-              <button class="btn btn-sm btn-primary" @click="editEmployee(employee.id)">Edit</button>
+            <td class="text-center">
+              <button class="btn btn-sm btn-warning" @click="editEmployee(employee.id)">Edit</button>
               <button
                 class="btn btn-sm btn-danger"
                 @click="deactivateEmployee(employee.id)"
