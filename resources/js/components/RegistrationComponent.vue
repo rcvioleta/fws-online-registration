@@ -21,13 +21,7 @@
               >{{ event.event_name }}</option>
             </select>
           </div>
-
-          <!-- <div class="small">
-            <div class="bg-warning p-1">
-              <strong>Important Note:</strong>
-              Registration form will display once you're done selecting an event.
-            </div>
-          </div>-->
+          <h4 v-show="generating_report">Generating registration form...</h4>
         </div>
       </div>
 
@@ -95,6 +89,7 @@ export default {
     return {
       show: true,
       loading: true,
+      generating_report: false,
       events: "",
       registrations: "",
       selected_event: "",
@@ -116,6 +111,7 @@ export default {
       this.selected_event = this.events.find(event => {
         return event.id === event_id;
       });
+      this.generating_report = true;
       axios
         .get("/event/" + event_id + "/registration")
         .then(result => {
@@ -157,7 +153,10 @@ export default {
   },
   watch: {
     events() {
-      return (this.loading = false);
+      this.loading = false;
+    },
+    registrations() {
+      this.generating_report = false;
     }
   }
 };

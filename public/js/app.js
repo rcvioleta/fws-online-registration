@@ -1934,17 +1934,12 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 //
 //
 //
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       show: true,
       loading: true,
+      generating_report: false,
       events: "",
       registrations: "",
       selected_event: "",
@@ -1969,6 +1964,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       this.selected_event = this.events.find(function (event) {
         return event.id === event_id;
       });
+      this.generating_report = true;
       axios.get("/event/" + event_id + "/registration").then(function (result) {
         if (result.data.length > 0) {
           _this2.show = false;
@@ -2012,7 +2008,10 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
   },
   watch: {
     events: function events() {
-      return this.loading = false;
+      this.loading = false;
+    },
+    registrations: function registrations() {
+      this.generating_report = false;
     }
   }
 });
@@ -38276,7 +38275,22 @@ var render = function() {
                           ],
                           2
                         )
-                      ])
+                      ]),
+                  _vm._v(" "),
+                  _c(
+                    "h4",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.generating_report,
+                          expression: "generating_report"
+                        }
+                      ]
+                    },
+                    [_vm._v("Generating registration form...")]
+                  )
                 ])
               ])
             : _c("div", { key: "has-reg", staticClass: "card" }, [
