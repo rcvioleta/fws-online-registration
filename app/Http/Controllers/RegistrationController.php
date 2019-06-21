@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use App\Http\Resources\Registration\RegistrationResource;
 use App\Model\Employee;
 use Carbon\Carbon;
+use App\Model\Statistics;
 
 // ini_set('max_execution_time', 300);
 
@@ -47,9 +48,9 @@ class RegistrationController extends Controller
         return $registration;
     }
 
-    public function register($id)
+    public function register($event_id)
     {
-        $reg = Registration::find($id);
+        $reg = Registration::find($event_id);
         $reg->status = 1;
         $reg->save();
         return response('Successully registered', Response::HTTP_OK);
@@ -110,12 +111,14 @@ class RegistrationController extends Controller
         $bulk_insert = [];
 
         foreach ($request->campaign as $key => $campaign_id) {
-            $emp_data = Campaign::find($campaign_id)->employee->where('status', 1);
+            $emp_data = Campaign::find($campaign_id)->employees->where('status', 1);
             $now = Carbon::now()->toDateTimeString();
             foreach ($emp_data as $key => $data) {
                 $bulk_insert[] = [
                     'employee_id' => $data->id,
                     'event_id' => $request->event_id,
+                    'campaign_id' => $data->campaign->id,
+                    'team_id' => $data->team->id,
                     'created_at' => $now,
                     'updated_at' => $now
                 ];

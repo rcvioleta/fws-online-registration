@@ -46,7 +46,7 @@
               >
             </div>
           </form>
-          <table class="table table-striped table-light">
+          <table class="table table-striped table-dark">
             <thead>
               <tr>
                 <th>List Number</th>

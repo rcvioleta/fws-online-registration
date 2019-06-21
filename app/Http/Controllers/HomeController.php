@@ -7,6 +7,8 @@ use App\Model\Event;
 use App\Model\Registration;
 use App\Model\Team;
 use App\Model\Employee;
+use App\Http\Resources\Statistics\StatisticsResource;
+use Symfony\Component\HttpFoundation\Response;
 
 class HomeController extends Controller
 {
@@ -27,72 +29,42 @@ class HomeController extends Controller
      */
     public function index()
     {
-        // Get all events
-        $events = Event::all();
+        return view('home', ['events' => Event::all()]);
+    }
 
-        // Get all teams
+    public function statsByEventId($id)
+    {
+        $event_registrations = Registration::where('event_id', $id)->get();
+        $records = [];
+
+        foreach ($event_registrations as $er_key => $event_registration) {
+            $records[$er_key]['event'] = $event_registration->event->event_name;
+            $records[$er_key]['campaign'] = $event_registration->campaign->campaign_name;
+            $records[$er_key]['team'] = $event_registration->employee->team->team_name;
+            $records[$er_key]['status'] = $event_registration->status;
+        }
+
         $teams = Team::all();
         $team_stats = [];
 
         // initialize team_stats
-        foreach ($events as $event_key => $event) {    
-            foreach ($teams as $team_key => $team) {
-                $total = Employee::where('team_id', $team->id)->get();
-                $team_stats[$event->event_name][$team_key] = [
-                    $team->team_name => [
-                        'attendance' => 0,
-                        'total' => count($total)
-                        ]
-                    ];
-            }
-        }
+        foreach ($teams as $team_key => $team) {
+            $team_stats[$team_key]['team'] = $team->team_name;
+            $team_stats[$team_key]['attendance_count'] = 0;
+            $team_stats[$team_key]['total_headcount'] = 0;
+        } 
 
-        // foreach ($events as $event_key => $event) { 
-        //     $event_records = Registration::where('event_id', $event->id)->get();
-        //     foreach ($event_records as $event_record) {
-        //         $team_name = $event_record->employee->team->team_name;
-        //         $event_name = $event_record->event->event_name;
-
-        //         if ($event_record->status !== 0) {
-        //             $team_stats[$event_name][$team_name]['attendance'] += 1;
-        //         }
-        //     }
-        // }
-
-        return view('home', ['team_stats' => $team_stats]);
-
-
-        /*
-        // App\Model\Registration::where('event_id', 1)->first()->employee->team
-        
-        Original Code
-
-        $events = Event::all();
-        $filtered_events = [];
-        $i = 0;
-
-        foreach ($events as $key => $event) {
-            $event_records = Registration::where('event_id', $event->id)->get();
-            if (count($event_records) > 0) {
-                $filtered_events[$i]['attendance'] = 0;
-
-                foreach ($event_records as $event_record) {
-                    if ($event_record['status'] !== 0) {
-                        $filtered_events[$i]['attendance'] += 1;
-                    } 
+        foreach ($records as $record) {
+            foreach ($team_stats as $team_key => $team_stat) {
+                if ($team_stat['team'] == $record['team']) {
+                    $team_stats[$team_key]['total_headcount'] += 1;
+                    if ($record['status'] !== 0) {
+                        $team_stats[$team_key]['attendance_count'] += 1;
+                    }
                 }
-                
-                $filtered_events[$i]['event_name'] = $event->event_name;
-                $filtered_events[$i]['total'] = count($event_records);
-                $filtered_events[$i]['percentage'] = $filtered_events[$i]['attendance'] / $filtered_events[$i]['total'] * 100; 
-
-                $i++;
             }
         }
 
-        // return response($filtered_events, 200);
-        return view('home')->with('event_records', $filtered_events);
-
-        */
+        return response($team_stats, Response::HTTP_OK);
     }
 }

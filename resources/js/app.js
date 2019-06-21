@@ -22,6 +22,7 @@ window.Vue = require('vue');
 
 Vue.component('registration-component', require('./components/RegistrationComponent.vue').default);
 Vue.component('employee-component', require('./components/EmployeesComponent.vue').default);
+Vue.component('stats-component', require('./components/StatisticsComponent.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

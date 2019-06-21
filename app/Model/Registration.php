@@ -17,4 +17,9 @@ class Registration extends Model
     {
         return $this->belongsTo(Event::class);
     }
+
+    public function campaign()
+    {
+        return $this->belongsTo(Campaign::class);
+    }
 }

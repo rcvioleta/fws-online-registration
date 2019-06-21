@@ -17,6 +17,8 @@ class CreateRegistrationsTable extends Migration
             $table->increments('id');
             $table->integer('employee_id')->unsigned();
             $table->integer('event_id')->unsigned();
+            $table->integer('campaign_id')->unsigned();
+            $table->integer('team_id')->unsigned();
             $table->integer('status')->default(0);
             $table->timestamps();
         });

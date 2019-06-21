@@ -12,6 +12,7 @@ Route::get('/register', function () {
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/stats/{id}', 'HomeController@statsByEventId');
 
     Route::resource('/event', 'EventController');
 
