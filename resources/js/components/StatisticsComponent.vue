@@ -35,7 +35,20 @@
             </div>
           </template>
           <template v-else>
-            <div class="alert alert-warning">No record to display just yet.</div>
+            <div class="progress" style="height: 20px;">
+              <div
+                class="progress-bar bg-success p-1"
+                role="progressbar"
+                style="width: 0%"
+                aria-valuenow="25"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              >
+                <span
+                  style="font-size: 1.3em;"
+                >{{ team_stat.attendance_count }} out of {{ team_stat.total_headcount }}</span>
+              </div>
+            </div>
           </template>
         </div>
       </template>

@@ -2068,6 +2068,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["events"],
   data: function data() {
@@ -6556,7 +6569,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.hide {\r\n  display: none;\n}\r\n", ""]);
+exports.push([module.i, "\n.hide {\n  display: none;\n}\n", ""]);
 
 // exports
 
@@ -38495,9 +38508,41 @@ var render = function() {
                         )
                       ]
                     : [
-                        _c("div", { staticClass: "alert alert-warning" }, [
-                          _vm._v("No record to display just yet.")
-                        ])
+                        _c(
+                          "div",
+                          {
+                            staticClass: "progress",
+                            staticStyle: { height: "20px" }
+                          },
+                          [
+                            _c(
+                              "div",
+                              {
+                                staticClass: "progress-bar bg-success p-1",
+                                staticStyle: { width: "0%" },
+                                attrs: {
+                                  role: "progressbar",
+                                  "aria-valuenow": "25",
+                                  "aria-valuemin": "0",
+                                  "aria-valuemax": "100"
+                                }
+                              },
+                              [
+                                _c(
+                                  "span",
+                                  { staticStyle: { "font-size": "1.3em" } },
+                                  [
+                                    _vm._v(
+                                      _vm._s(team_stat.attendance_count) +
+                                        " out of " +
+                                        _vm._s(team_stat.total_headcount)
+                                    )
+                                  ]
+                                )
+                              ]
+                            )
+                          ]
+                        )
                       ]
                 ],
                 2
@@ -51017,8 +51062,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\14761.FLATWORLD-PH\Desktop\Dev Projects\fws-online-registration\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\14761.FLATWORLD-PH\Desktop\Dev Projects\fws-online-registration\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/rogene/Desktop/Projects/fws-online-registration/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/rogene/Desktop/Projects/fws-online-registration/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
