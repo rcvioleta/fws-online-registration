@@ -9,7 +9,8 @@
         <div class="card-header">Generate Registration Form</div>
 
         <div class="card-body">
-          <div class="form-group">
+          <h4 v-if="loading">Loading events....</h4>
+          <div class="form-group" v-else>
             <label for="event">Event</label>
             <select name="event" id="event" class="form-control" @change="generateRegistration">
               <option value selected disabled>Select an event to start the registration</option>
@@ -21,12 +22,12 @@
             </select>
           </div>
 
-          <div class="small">
+          <!-- <div class="small">
             <div class="bg-warning p-1">
               <strong>Important Note:</strong>
               Registration form will display once you're done selecting an event.
             </div>
-          </div>
+          </div>-->
         </div>
       </div>
 
@@ -93,6 +94,7 @@ export default {
   data() {
     return {
       show: true,
+      loading: true,
       events: "",
       registrations: "",
       selected_event: "",
@@ -151,6 +153,11 @@ export default {
           .toLowerCase()
           .includes(this.search_key.toLowerCase());
       });
+    }
+  },
+  watch: {
+    events() {
+      return (this.loading = false);
     }
   }
 };

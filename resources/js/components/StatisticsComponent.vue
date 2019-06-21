@@ -3,7 +3,7 @@
     <div class="card-header">Event/Team Attendance Report</div>
     <div class="card-body">
       <div class="form-group">
-        <label for="event">Select specific event statistics</label>
+        <label for="event">Select specific event report</label>
         <select name="event" id="event" class="form-control" @change="lookupStats">
           <option value disabled selected>-- Select Event --</option>
           <option v-for="event in events" :key="event.id" :value="event.id">{{ event.event_name }}</option>
@@ -53,7 +53,7 @@
         </div>
       </template>
       <div v-show="loading">
-        <h4>Please waiting... we are loading the event records.</h4>
+        <h4>Loading {{ search_event_name }} report.</h4>
       </div>
     </div>
   </div>
@@ -64,15 +64,23 @@ export default {
   data() {
     return {
       team_stats: "",
-      loading: false
+      loading: false,
+      search_event_name: ""
     };
   },
   methods: {
     lookupStats(event) {
-      console.log(event.target.value);
+      const id = parseInt(event.target.value);
+      this.events.filter(event => {
+        if (event.id === id) {
+          this.search_event_name = event.event_name;
+        }
+      });
       this.loading = true;
+
+      console.log(event.target.value);
       axios
-        .get("/stats/" + event.target.value)
+        .get("/stats/" + id)
         .then(resp => {
           console.log(resp);
           this.team_stats = resp.data;

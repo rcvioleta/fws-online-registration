@@ -1939,10 +1939,12 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
       show: true,
+      loading: true,
       events: "",
       registrations: "",
       selected_event: "",
@@ -2006,6 +2008,11 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       return this.registrations.filter(function (record) {
         return record.full_name.toLowerCase().includes(_this4.search_key.toLowerCase());
       });
+    }
+  },
+  watch: {
+    events: function events() {
+      return this.loading = false;
     }
   }
 });
@@ -2086,16 +2093,23 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       team_stats: "",
-      loading: false
+      loading: false,
+      search_event_name: ""
     };
   },
   methods: {
     lookupStats: function lookupStats(event) {
       var _this = this;
 
-      console.log(event.target.value);
+      var id = parseInt(event.target.value);
+      this.events.filter(function (event) {
+        if (event.id === id) {
+          _this.search_event_name = event.event_name;
+        }
+      });
       this.loading = true;
-      axios.get("/stats/" + event.target.value).then(function (resp) {
+      console.log(event.target.value);
+      axios.get("/stats/" + id).then(function (resp) {
         console.log(resp);
         _this.team_stats = resp.data;
       })["catch"](function (err) {
@@ -6569,7 +6583,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.hide {\n  display: none;\n}\n", ""]);
+exports.push([module.i, "\n.hide {\r\n  display: none;\n}\r\n", ""]);
 
 // exports
 
@@ -38222,43 +38236,47 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "card-body" }, [
-                  _c("div", { staticClass: "form-group" }, [
-                    _c("label", { attrs: { for: "event" } }, [_vm._v("Event")]),
-                    _vm._v(" "),
-                    _c(
-                      "select",
-                      {
-                        staticClass: "form-control",
-                        attrs: { name: "event", id: "event" },
-                        on: { change: _vm.generateRegistration }
-                      },
-                      [
-                        _c(
-                          "option",
-                          { attrs: { value: "", selected: "", disabled: "" } },
-                          [_vm._v("Select an event to start the registration")]
-                        ),
+                  _vm.loading
+                    ? _c("h4", [_vm._v("Loading events....")])
+                    : _c("div", { staticClass: "form-group" }, [
+                        _c("label", { attrs: { for: "event" } }, [
+                          _vm._v("Event")
+                        ]),
                         _vm._v(" "),
-                        _vm._l(_vm.events, function(event) {
-                          return _c(
-                            "option",
-                            { key: event.key, domProps: { value: event.id } },
-                            [_vm._v(_vm._s(event.event_name))]
-                          )
-                        })
-                      ],
-                      2
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "small" }, [
-                    _c("div", { staticClass: "bg-warning p-1" }, [
-                      _c("strong", [_vm._v("Important Note:")]),
-                      _vm._v(
-                        "\n            Registration form will display once you're done selecting an event.\n          "
-                      )
-                    ])
-                  ])
+                        _c(
+                          "select",
+                          {
+                            staticClass: "form-control",
+                            attrs: { name: "event", id: "event" },
+                            on: { change: _vm.generateRegistration }
+                          },
+                          [
+                            _c(
+                              "option",
+                              {
+                                attrs: { value: "", selected: "", disabled: "" }
+                              },
+                              [
+                                _vm._v(
+                                  "Select an event to start the registration"
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _vm._l(_vm.events, function(event) {
+                              return _c(
+                                "option",
+                                {
+                                  key: event.key,
+                                  domProps: { value: event.id }
+                                },
+                                [_vm._v(_vm._s(event.event_name))]
+                              )
+                            })
+                          ],
+                          2
+                        )
+                      ])
                 ])
               ])
             : _c("div", { key: "has-reg", staticClass: "card" }, [
@@ -38422,7 +38440,7 @@ var render = function() {
       [
         _c("div", { staticClass: "form-group" }, [
           _c("label", { attrs: { for: "event" } }, [
-            _vm._v("Select specific event statistics")
+            _vm._v("Select specific event report")
           ]),
           _vm._v(" "),
           _c(
@@ -38564,7 +38582,7 @@ var render = function() {
           },
           [
             _c("h4", [
-              _vm._v("Please waiting... we are loading the event records.")
+              _vm._v("Loading " + _vm._s(_vm.search_event_name) + " report.")
             ])
           ]
         )
@@ -51062,8 +51080,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /home/rogene/Desktop/Projects/fws-online-registration/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /home/rogene/Desktop/Projects/fws-online-registration/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\14761.FLATWORLD-PH\Desktop\Dev Projects\fws-online-registration\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\14761.FLATWORLD-PH\Desktop\Dev Projects\fws-online-registration\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
